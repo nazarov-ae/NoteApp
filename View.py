@@ -30,7 +30,15 @@ class View():
         self.mainWindow.show()
 
     def setupEventsOfButtonsInMainWindow(self):
-        self.mainWindow.add_button.pressed.connect(self.addButtonInMainWindowIsPressed)
+        self.mainWindow.add_button.pressed.connect(lambda: self.addButtonInMainWindowIsPressed())
+        self.mainWindow.edit_button.pressed.connect(lambda: self.editButtonInMainWindowIsPressed())
 
     def addButtonInMainWindowIsPressed(self):
+        self.noteWindow.noteTabTittle.setText("Add note")
+        self.noteWindow.addOrEditButton.setText("Add")
+        self.noteWindow.show()
+
+    def editButtonInMainWindowIsPressed(self):
+        self.noteWindow.noteTabTittle.setText("Edit note")
+        self.noteWindow.addOrEditButton.setText("Edit")
         self.noteWindow.show()

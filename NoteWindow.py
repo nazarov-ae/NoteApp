@@ -26,15 +26,15 @@ class Ui_NoteWindow(object):
         self.frame.setObjectName("frame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.frame)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.NoteTabTittle = QtWidgets.QLabel(parent=self.frame)
+        self.noteTabTittle = QtWidgets.QLabel(parent=self.frame)
         font = QtGui.QFont()
         font.setFamily("SF Pro Display")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.NoteTabTittle.setFont(font)
-        self.NoteTabTittle.setObjectName("NoteTabTittle")
-        self.verticalLayout.addWidget(self.NoteTabTittle, 0, QtCore.Qt.AlignmentFlag.AlignTop)
+        self.noteTabTittle.setFont(font)
+        self.noteTabTittle.setObjectName("noteTabTittle")
+        self.verticalLayout.addWidget(self.noteTabTittle, 0, QtCore.Qt.AlignmentFlag.AlignTop)
         self.verticalLayout_4.addWidget(self.frame)
         self.frame_2 = QtWidgets.QFrame(parent=NoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
@@ -72,18 +72,18 @@ class Ui_NoteWindow(object):
         self.frame_4.setObjectName("frame_4")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_4)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.add_button = QtWidgets.QPushButton(parent=self.frame_4)
+        self.addOrEditButton = QtWidgets.QPushButton(parent=self.frame_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.add_button.sizePolicy().hasHeightForWidth())
-        self.add_button.setSizePolicy(sizePolicy)
-        self.add_button.setMinimumSize(QtCore.QSize(0, 30))
+        sizePolicy.setHeightForWidth(self.addOrEditButton.sizePolicy().hasHeightForWidth())
+        self.addOrEditButton.setSizePolicy(sizePolicy)
+        self.addOrEditButton.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.add_button.setFont(font)
-        self.add_button.setStyleSheet("QPushButton {\n"
+        self.addOrEditButton.setFont(font)
+        self.addOrEditButton.setStyleSheet("QPushButton {\n"
 "background-color: rgb(255, 255, 255);\n"
 "margin-right: 2 px;\n"
 "margin-left: 2px;\n"
@@ -100,9 +100,9 @@ class Ui_NoteWindow(object):
 "")
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/icons/icons/add_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.add_button.setIcon(icon)
-        self.add_button.setObjectName("add_button")
-        self.horizontalLayout.addWidget(self.add_button)
+        self.addOrEditButton.setIcon(icon)
+        self.addOrEditButton.setObjectName("addOrEditButton")
+        self.horizontalLayout.addWidget(self.addOrEditButton)
         self.verticalLayout_4.addWidget(self.frame_4)
 
         self.retranslateUi(NoteWindow)
@@ -111,9 +111,9 @@ class Ui_NoteWindow(object):
     def retranslateUi(self, NoteWindow):
         _translate = QtCore.QCoreApplication.translate
         NoteWindow.setWindowTitle(_translate("NoteWindow", "Dialog"))
-        self.NoteTabTittle.setText(_translate("NoteWindow", "Add note"))
+        self.noteTabTittle.setText(_translate("NoteWindow", "Add note"))
         self.noteTextEdit.setPlaceholderText(_translate("NoteWindow", "Note"))
-        self.add_button.setText(_translate("NoteWindow", "Add"))
+        self.addOrEditButton.setText(_translate("NoteWindow", "Add"))
 
 
 if __name__ == "__main__":
