@@ -7,7 +7,7 @@ import sys
 class Main():
     def __init__(self) -> None:
         self.model = Model()
-        self.viewModel = ViewModel()
+        self.viewModel = ViewModel(self.model)
         self.view = View(self.viewModel)
 
 def start():
