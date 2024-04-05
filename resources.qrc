@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/add_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>icons/delete_FILL0_wght400_GRAD0_opsz24.svg</file>
+    <file>icons/edit_FILL0_wght400_GRAD0_opsz24.svg</file>
+  </qresource>
+</RCC>
