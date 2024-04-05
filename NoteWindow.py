@@ -9,13 +9,13 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(421, 552)
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout(Dialog)
+class Ui_NoteWindow(object):
+    def setupUi(self, NoteWindow):
+        NoteWindow.setObjectName("NoteWindow")
+        NoteWindow.resize(421, 552)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(NoteWindow)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.frame = QtWidgets.QFrame(parent=Dialog)
+        self.frame = QtWidgets.QFrame(parent=NoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -36,7 +36,7 @@ class Ui_Dialog(object):
         self.NoteTabTittle.setObjectName("NoteTabTittle")
         self.verticalLayout.addWidget(self.NoteTabTittle, 0, QtCore.Qt.AlignmentFlag.AlignTop)
         self.verticalLayout_4.addWidget(self.frame)
-        self.frame_2 = QtWidgets.QFrame(parent=Dialog)
+        self.frame_2 = QtWidgets.QFrame(parent=NoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -51,7 +51,7 @@ class Ui_Dialog(object):
         self.calendarWidget.setObjectName("calendarWidget")
         self.verticalLayout_2.addWidget(self.calendarWidget)
         self.verticalLayout_4.addWidget(self.frame_2)
-        self.frame_3 = QtWidgets.QFrame(parent=Dialog)
+        self.frame_3 = QtWidgets.QFrame(parent=NoteWindow)
         self.frame_3.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_3.setObjectName("frame_3")
@@ -61,7 +61,7 @@ class Ui_Dialog(object):
         self.noteTextEdit.setObjectName("noteTextEdit")
         self.verticalLayout_3.addWidget(self.noteTextEdit)
         self.verticalLayout_4.addWidget(self.frame_3)
-        self.frame_4 = QtWidgets.QFrame(parent=Dialog)
+        self.frame_4 = QtWidgets.QFrame(parent=NoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -105,22 +105,22 @@ class Ui_Dialog(object):
         self.horizontalLayout.addWidget(self.add_button)
         self.verticalLayout_4.addWidget(self.frame_4)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(NoteWindow)
+        QtCore.QMetaObject.connectSlotsByName(NoteWindow)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, NoteWindow):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.NoteTabTittle.setText(_translate("Dialog", "Add note"))
-        self.noteTextEdit.setPlaceholderText(_translate("Dialog", "Note"))
-        self.add_button.setText(_translate("Dialog", "Add"))
+        NoteWindow.setWindowTitle(_translate("NoteWindow", "Dialog"))
+        self.NoteTabTittle.setText(_translate("NoteWindow", "Add note"))
+        self.noteTextEdit.setPlaceholderText(_translate("NoteWindow", "Note"))
+        self.add_button.setText(_translate("NoteWindow", "Add"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    NoteWindow = QtWidgets.QDialog()
+    ui = Ui_NoteWindow()
+    ui.setupUi(NoteWindow)
+    NoteWindow.show()
     sys.exit(app.exec())
