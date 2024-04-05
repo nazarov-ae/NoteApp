@@ -1,2 +1,5 @@
+import pretty_errors
+
 class ViewModel():
-    pass
+    def __init__(self) -> None:
+        pass
