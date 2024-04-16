@@ -1,5 +1,6 @@
 from MainWindow import Ui_MainWindow
-from NoteWindow import Ui_NoteWindow
+from AddNoteWindow import Ui_AddNoteWindow
+from EditNoteWindow import Ui_EditNoteWindow
 from LoginWindow import Ui_LoginWindow
 from ViewModel import ViewModel
 from PyQt6.QtWidgets import QMainWindow, QDialog
@@ -10,9 +11,14 @@ class MainWindowUI(Ui_MainWindow, QMainWindow):
         super(Ui_MainWindow, self).__init__()
         super(QMainWindow, self).__init__()
 
-class NoteWindowUI(Ui_NoteWindow, QDialog):
+class AddNoteWindowUI(Ui_AddNoteWindow, QDialog):
     def __init__(self):
-        super(Ui_NoteWindow, self).__init__()
+        super(Ui_AddNoteWindow, self).__init__()
+        super(QDialog, self).__init__()
+
+class EditNoteWindowUI(Ui_EditNoteWindow, QDialog):
+    def __init__(self):
+        super(Ui_EditNoteWindow, self).__init__()
         super(QDialog, self).__init__()
 
 class LoginWindowUI(Ui_LoginWindow, QDialog):
@@ -20,66 +26,81 @@ class LoginWindowUI(Ui_LoginWindow, QDialog):
         super(Ui_LoginWindow, self).__init__()
         super(QDialog, self).__init__()
 
+
+
 class View():
     def __init__(self, viewModel: ViewModel) -> None:
-        self.mainWindow = MainWindowUI()
-        self.mainWindow.setupUi(self.mainWindow)
+        self.viewModel = viewModel
+        self.main_Window = MainWindowUI()
+        self.main_Window.setupUi(self.main_Window)
 
-        self.noteWindow = NoteWindowUI()
-        self.noteWindow.setupUi(self.noteWindow)
+        self.add_note_window = AddNoteWindowUI()
+        self.add_note_window.setupUi(self.add_note_window)
 
-        self.loginWindow = LoginWindowUI()
-        self.loginWindow.setupUi(self.loginWindow)
-        self.loginWindow.loginWarningLabel.setText("")
-        self.loginWindow.passwordWarningLabel.setText("")
+        self.edit_note_window = EditNoteWindowUI()
+        self.edit_note_window.setupUi(self.edit_note_window)
+
+        self.login_Window = LoginWindowUI()
+        self.login_Window.setupUi(self.login_Window)
+        self.login_Window.loginWarningLabel.setText("")
+        self.login_Window.passwordWarningLabel.setText("")
 
         self.connect_all_events_of_buttons_in_MainWindow()
         self.connect_all_events_of_buttons_in_LoginWindow()
-        self.loginWindow.show()
+        self.connect_all_events_of_buttons_in_NoteWindow()
+        self.login_Window.show()
 
+    #MainWindow
     def connect_all_events_of_buttons_in_MainWindow(self):
-        self.mainWindow.add_button.pressed.connect(lambda: self.add_button_in_MainWindow_is_pressed())
-        self.mainWindow.edit_button.pressed.connect(lambda: self.edit_button_in_MainWindow_is_pressed())
+        self.main_Window.add_button.pressed.connect(lambda: self.add_button_in_MainWindow_is_pressed())
+        self.main_Window.edit_button.pressed.connect(lambda: self.edit_button_in_MainWindow_is_pressed())
 
+    def add_button_in_MainWindow_is_pressed(self):
+        self.add_note_window.show()
+
+    def edit_button_in_MainWindow_is_pressed(self):
+        self.edit_note_window.show()
+
+    #LoginWindow
     def connect_all_events_of_buttons_in_LoginWindow(self):
-        self.loginWindow.signInButton.pressed.connect(lambda: self.signIn_button_in_LoginWindow_is_pressed())
+        self.login_Window.sign_in_button.pressed.connect(lambda: self.sign_in_button_in_LoginWindow_is_pressed())
 
-    def signIn_button_in_LoginWindow_is_pressed(self):
+    def sign_in_button_in_LoginWindow_is_pressed(self):
         if self.check_loginLabelEdit_validation_is_passed():
             if self.check_passwordLabelEdit_validation_is_passed():
-                self.mainWindow.mainTabLabel.setText(f"Welcome {self.loginWindow.loginLabelEdit.text()}. Here all your notes")
-                self.mainWindow.show()
+                self.main_Window.mainTabLabel.setText(f"Welcome {self.login_Window.loginLabelEdit.text()}. Here all your notes")
+                self.main_Window.show()
 
     def check_login_is_not_empty(self):
-        if self.loginWindow.loginLabelEdit.text() != "":
-            self.loginWindow.loginWarningLabel.setText("")
+        if self.login_Window.loginLabelEdit.text() != "":
+            self.login_Window.loginWarningLabel.setText("")
             return True
         else:
-            self.loginWindow.loginWarningLabel.setText("Пожалуйста введите логин")
+            self.login_Window.loginWarningLabel.setText("Пожалуйста введите логин")
             return False
 
     def check_password_is_not_empty(self):
-        if self.loginWindow.passwordLabelEdit.text() != "":
-            self.loginWindow.passwordWarningLabel.setText("")
+        if self.login_Window.passwordLabelEdit.text() != "":
+            self.login_Window.passwordWarningLabel.setText("")
             return True
         else:
-            self.loginWindow.passwordWarningLabel.setText("Пожалуйста введите пароль")
+            self.login_Window.passwordWarningLabel.setText("Пожалуйста введите пароль")
             return False
 
     def check_login_rules_are_followed(self):
-        if len(self.loginWindow.loginLabelEdit.text()) < 10:
-            self.loginWindow.loginWarningLabel.setText("")
+        if len(self.login_Window.loginLabelEdit.text()) < 10:
+            self.login_Window.loginWarningLabel.setText("")
             return True
         else:
-            self.loginWindow.loginWarningLabel.setText("Логин должен быть меньше либо равен 10 символам")
+            self.login_Window.loginWarningLabel.setText("Логин должен быть меньше либо равен 10 символам")
             return False
 
     def check_password_rules_are_followed(self):
-        if len(self.loginWindow.passwordLabelEdit.text()) < 8:
-            self.loginWindow.loginWarningLabel.setText("")
+        if len(self.login_Window.passwordLabelEdit.text()) < 8:
+            self.login_Window.loginWarningLabel.setText("")
             return True
         else:
-            self.loginWindow.loginWarningLabel.setText("Пароль должен быть длиней 8 символов")
+            self.login_Window.loginWarningLabel.setText("Пароль должен быть длиней 8 символов")
             return False
 
     def check_loginLabelEdit_validation_is_passed(self):
@@ -100,13 +121,9 @@ class View():
         else:
             return False
 
+    #NoteWindow
+    def connect_all_events_of_buttons_in_NoteWindow(self):
+        self.add_note_window.add_button.pressed.connect(lambda: self.add_button_in_AddNoteWindow_is_pressed())
 
-    def add_button_in_MainWindow_is_pressed(self):
-        self.noteWindow.noteTabTittle.setText("Add note")
-        self.noteWindow.addOrEditButton.setText("Add")
-        self.noteWindow.show()
-
-    def edit_button_in_MainWindow_is_pressed(self):
-        self.noteWindow.noteTabTittle.setText("Edit note")
-        self.noteWindow.addOrEditButton.setText("Edit")
-        self.noteWindow.show()
+    def add_button_in_AddNoteWindow_is_pressed():
+        pass

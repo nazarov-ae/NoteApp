@@ -75,18 +75,18 @@ class Ui_LoginWindow(object):
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.frame_3)
         self.verticalLayout_2.setSpacing(6)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.signInButton = QtWidgets.QPushButton(parent=self.frame_3)
+        self.sign_in_button = QtWidgets.QPushButton(parent=self.frame_3)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.signInButton.sizePolicy().hasHeightForWidth())
-        self.signInButton.setSizePolicy(sizePolicy)
-        self.signInButton.setMinimumSize(QtCore.QSize(0, 30))
+        sizePolicy.setHeightForWidth(self.sign_in_button.sizePolicy().hasHeightForWidth())
+        self.sign_in_button.setSizePolicy(sizePolicy)
+        self.sign_in_button.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.signInButton.setFont(font)
-        self.signInButton.setStyleSheet("QPushButton {\n"
+        self.sign_in_button.setFont(font)
+        self.sign_in_button.setStyleSheet("QPushButton {\n"
 "background-color: rgb(255, 255, 255);\n"
 "margin-right: 2 px;\n"
 "margin-left: 2px;\n"
@@ -101,20 +101,20 @@ class Ui_LoginWindow(object):
 "background-color: rgb(224, 224, 224, 40);\n"
 "}\n"
 "")
-        self.signInButton.setObjectName("signInButton")
-        self.verticalLayout_2.addWidget(self.signInButton)
-        self.signUpButton = QtWidgets.QPushButton(parent=self.frame_3)
+        self.sign_in_button.setObjectName("sign_in_button")
+        self.verticalLayout_2.addWidget(self.sign_in_button)
+        self.sign_up_button = QtWidgets.QPushButton(parent=self.frame_3)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.signUpButton.sizePolicy().hasHeightForWidth())
-        self.signUpButton.setSizePolicy(sizePolicy)
-        self.signUpButton.setMinimumSize(QtCore.QSize(0, 30))
+        sizePolicy.setHeightForWidth(self.sign_up_button.sizePolicy().hasHeightForWidth())
+        self.sign_up_button.setSizePolicy(sizePolicy)
+        self.sign_up_button.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.signUpButton.setFont(font)
-        self.signUpButton.setStyleSheet("QPushButton {\n"
+        self.sign_up_button.setFont(font)
+        self.sign_up_button.setStyleSheet("QPushButton {\n"
 "background-color: rgb(255, 255, 255);\n"
 "margin-right: 2 px;\n"
 "margin-left: 2px;\n"
@@ -129,8 +129,8 @@ class Ui_LoginWindow(object):
 "background-color: rgb(224, 224, 224, 40);\n"
 "}\n"
 "")
-        self.signUpButton.setObjectName("signUpButton")
-        self.verticalLayout_2.addWidget(self.signUpButton)
+        self.sign_up_button.setObjectName("sign_up_button")
+        self.verticalLayout_2.addWidget(self.sign_up_button)
         self.verticalLayout_3.addWidget(self.frame_3)
 
         self.retranslateUi(LoginWindow)
@@ -144,8 +144,8 @@ class Ui_LoginWindow(object):
         self.loginLabelEdit.setPlaceholderText(_translate("LoginWindow", "Login"))
         self.passwordWarningLabel.setText(_translate("LoginWindow", "passwordWarning"))
         self.passwordLabelEdit.setPlaceholderText(_translate("LoginWindow", "Password"))
-        self.signInButton.setText(_translate("LoginWindow", "Sign In"))
-        self.signUpButton.setText(_translate("LoginWindow", "Sign Up"))
+        self.sign_in_button.setText(_translate("LoginWindow", "Sign In"))
+        self.sign_up_button.setText(_translate("LoginWindow", "Sign Up"))
 
 
 if __name__ == "__main__":

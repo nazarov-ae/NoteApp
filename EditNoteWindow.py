@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'UI/NoteWindow.ui'
+# Form implementation generated from reading ui file 'UI/EditNoteWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.6.1
 #
@@ -9,13 +9,13 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_NoteWindow(object):
-    def setupUi(self, NoteWindow):
-        NoteWindow.setObjectName("NoteWindow")
-        NoteWindow.resize(421, 552)
-        self.verticalLayout_4 = QtWidgets.QVBoxLayout(NoteWindow)
+class Ui_EditNoteWindow(object):
+    def setupUi(self, EditNoteWindow):
+        EditNoteWindow.setObjectName("EditNoteWindow")
+        EditNoteWindow.resize(421, 552)
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(EditNoteWindow)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.frame = QtWidgets.QFrame(parent=NoteWindow)
+        self.frame = QtWidgets.QFrame(parent=EditNoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -36,7 +36,7 @@ class Ui_NoteWindow(object):
         self.noteTabTittle.setObjectName("noteTabTittle")
         self.verticalLayout.addWidget(self.noteTabTittle, 0, QtCore.Qt.AlignmentFlag.AlignTop)
         self.verticalLayout_4.addWidget(self.frame)
-        self.frame_2 = QtWidgets.QFrame(parent=NoteWindow)
+        self.frame_2 = QtWidgets.QFrame(parent=EditNoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -51,7 +51,7 @@ class Ui_NoteWindow(object):
         self.calendarWidget.setObjectName("calendarWidget")
         self.verticalLayout_2.addWidget(self.calendarWidget)
         self.verticalLayout_4.addWidget(self.frame_2)
-        self.frame_3 = QtWidgets.QFrame(parent=NoteWindow)
+        self.frame_3 = QtWidgets.QFrame(parent=EditNoteWindow)
         self.frame_3.setFrameShape(QtWidgets.QFrame.Shape.StyledPanel)
         self.frame_3.setFrameShadow(QtWidgets.QFrame.Shadow.Raised)
         self.frame_3.setObjectName("frame_3")
@@ -61,7 +61,7 @@ class Ui_NoteWindow(object):
         self.noteTextEdit.setObjectName("noteTextEdit")
         self.verticalLayout_3.addWidget(self.noteTextEdit)
         self.verticalLayout_4.addWidget(self.frame_3)
-        self.frame_4 = QtWidgets.QFrame(parent=NoteWindow)
+        self.frame_4 = QtWidgets.QFrame(parent=EditNoteWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Preferred, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -72,18 +72,18 @@ class Ui_NoteWindow(object):
         self.frame_4.setObjectName("frame_4")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.frame_4)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.addOrEditButton = QtWidgets.QPushButton(parent=self.frame_4)
+        self.edit_button = QtWidgets.QPushButton(parent=self.frame_4)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Minimum, QtWidgets.QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.addOrEditButton.sizePolicy().hasHeightForWidth())
-        self.addOrEditButton.setSizePolicy(sizePolicy)
-        self.addOrEditButton.setMinimumSize(QtCore.QSize(0, 30))
+        sizePolicy.setHeightForWidth(self.edit_button.sizePolicy().hasHeightForWidth())
+        self.edit_button.setSizePolicy(sizePolicy)
+        self.edit_button.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
         font.setFamily("Arial")
         font.setPointSize(10)
-        self.addOrEditButton.setFont(font)
-        self.addOrEditButton.setStyleSheet("QPushButton {\n"
+        self.edit_button.setFont(font)
+        self.edit_button.setStyleSheet("QPushButton {\n"
 "background-color: rgb(255, 255, 255);\n"
 "margin-right: 2 px;\n"
 "margin-left: 2px;\n"
@@ -99,28 +99,28 @@ class Ui_NoteWindow(object):
 "}\n"
 "")
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/icons/icons/add_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
-        self.addOrEditButton.setIcon(icon)
-        self.addOrEditButton.setObjectName("addOrEditButton")
-        self.horizontalLayout.addWidget(self.addOrEditButton)
+        icon.addPixmap(QtGui.QPixmap(":/icons/icons/edit_FILL0_wght400_GRAD0_opsz24.svg"), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.edit_button.setIcon(icon)
+        self.edit_button.setObjectName("edit_button")
+        self.horizontalLayout.addWidget(self.edit_button)
         self.verticalLayout_4.addWidget(self.frame_4)
 
-        self.retranslateUi(NoteWindow)
-        QtCore.QMetaObject.connectSlotsByName(NoteWindow)
+        self.retranslateUi(EditNoteWindow)
+        QtCore.QMetaObject.connectSlotsByName(EditNoteWindow)
 
-    def retranslateUi(self, NoteWindow):
+    def retranslateUi(self, EditNoteWindow):
         _translate = QtCore.QCoreApplication.translate
-        NoteWindow.setWindowTitle(_translate("NoteWindow", "Dialog"))
-        self.noteTabTittle.setText(_translate("NoteWindow", "Add note"))
-        self.noteTextEdit.setPlaceholderText(_translate("NoteWindow", "Note"))
-        self.addOrEditButton.setText(_translate("NoteWindow", "Add"))
+        EditNoteWindow.setWindowTitle(_translate("EditNoteWindow", "Dialog"))
+        self.noteTabTittle.setText(_translate("EditNoteWindow", "Edit Note"))
+        self.noteTextEdit.setPlaceholderText(_translate("EditNoteWindow", "Note"))
+        self.edit_button.setText(_translate("EditNoteWindow", "Edit"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    NoteWindow = QtWidgets.QDialog()
-    ui = Ui_NoteWindow()
-    ui.setupUi(NoteWindow)
-    NoteWindow.show()
+    EditNoteWindow = QtWidgets.QDialog()
+    ui = Ui_EditNoteWindow()
+    ui.setupUi(EditNoteWindow)
+    EditNoteWindow.show()
     sys.exit(app.exec())

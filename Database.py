@@ -3,6 +3,7 @@ import sqlite3
 class DatabaseCreator():
     def __init__(self):
         self.db_name = "noteAppDataBase"
+        self.create_database()
 
     def create_database(self):
         conn = sqlite3.connect(self.db_name)
@@ -35,6 +36,6 @@ class DatabaseCreator():
                            )""")
         except sqlite3.Error as error:
             print("Error creating UsersNotes table", error)
-            
+
         conn.commit()
         conn.close()
