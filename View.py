@@ -177,21 +177,28 @@ class View():
         self.login_Window.sign_up_button.pressed.connect(lambda: self.sign_up_button_in_LoginWindow_is_pressed())
         self.login_Window.sign_in_button.pressed.connect(lambda: self.sign_in_button_in_LoginWindow_is_pressed())
 
+    def reset_login_and_password_labels(self):
+        self.login_Window.loginLabelEdit.setText("")
+        self.login_Window.passwordLabelEdit.setText("")
+
+    def reset_warning_labels_in_login_window(self):
+        self.login_Window.loginWarningLabel.setText("")
+        self.login_Window.passwordWarningLabel.setText("")
+
     def sign_in_button_in_LoginWindow_is_pressed(self):
-        if self.check_loginLabelEdit_validation_is_passed():
-            if self.check_passwordLabelEdit_validation_is_passed():
-                if self.viewModel.check_login_is_registered(self.login):
-                    if self.viewModel.check_password_is_correct(self.login, self.password):
-                        self.viewModel.change_users_info(self.login, self.password)
-                        self.main_Window.mainTabLabel.setText(f"Welcome {self.login}. Here all your notes")
-                        self.viewModel.reset_selected_note()
-                        self.main_Window.show()
-                    else:
-                        self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
-                        self.login_Window.passwordWarningLabel.setText("Incorrect password")
-                else:
-                    self.login_Window.loginWarningLabel.setStyleSheet('color: red')
-                    self.login_Window.loginWarningLabel.setText("This login does not registered")
+        if self.viewModel.check_login_is_registered(self.login):
+            if self.viewModel.check_password_is_correct(self.login, self.password):
+                self.viewModel.change_users_info(self.login, self.password)
+                self.main_Window.mainTabLabel.setText(f"Welcome {self.login}. Here all your notes")
+                self.viewModel.reset_selected_note()
+                self.reset_login_and_password_labels()
+                self.main_Window.show()
+            else:
+                self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+                self.login_Window.passwordWarningLabel.setText("Incorrect password")
+        else:
+            self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+            self.login_Window.loginWarningLabel.setText("This login does not registered")
 
     def sign_up_button_in_LoginWindow_is_pressed(self):
         if self.check_loginLabelEdit_validation_is_passed():
