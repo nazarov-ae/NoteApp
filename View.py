@@ -70,20 +70,25 @@ class View():
     def sign_in_button_in_LoginWindow_is_pressed(self):
         if self.check_loginLabelEdit_validation_is_passed():
             if self.check_passwordLabelEdit_validation_is_passed():
-                pass
+                if self.viewModel.check_login_is_registered(self.login_Window.loginLabelEdit.text()):
+                    if self.viewModel.check_password_is_correct(self.login_Window.loginLabelEdit.text(), self.login_Window.passwordLabelEdit.text()):
+                        self.viewModel.change_users_info(self.login_Window.loginLabelEdit.text(), self.login_Window.passwordLabelEdit.text())
+                        self.main_Window.mainTabLabel.setText(f"Welcome {self.login_Window.loginLabelEdit.text()}. Here all your notes")
+                        self.main_Window.show()
+                    else:
+                        self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+                        self.login_Window.passwordWarningLabel.setText("Incorrect password")
+                else:
+                    self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+                    self.login_Window.loginWarningLabel.setText("This login does not registered")
 
-    def check_if_login_is_registered(self):
-        if self.viewModel.check_login_is_registered():
-            pass
-        else:
-            return False
 
     def sign_up_button_in_LoginWindow_is_pressed(self):
         if self.check_loginLabelEdit_validation_is_passed():
             if self.check_passwordLabelEdit_validation_is_passed():
                 if self.viewModel.check_login_is_registered(self.login_Window.loginLabelEdit.text()):
                     self.login_Window.loginWarningLabel.setStyleSheet('color: red')
-                    self.login_Window.loginWarningLabel.setText("This login is already used")
+                    self.login_Window.loginWarningLabel.setText("This login is already registered")
                 else:
                     self.viewModel.add_user_in_Users_table(self.login_Window.loginLabelEdit.text(), self.login_Window.passwordLabelEdit.text())
                     self.login_Window.loginWarningLabel.setStyleSheet('color: green')

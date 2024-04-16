@@ -47,7 +47,7 @@ class DatabaseCreator():
         cursor = conn.cursor()
 
         try:
-            cursor.execute("SELECT * FROM Users")
+            cursor.execute("SELECT login FROM Users")
         except sqlite3.Error as error:
             print("Error selecting login from users table", error)
 
@@ -57,12 +57,32 @@ class DatabaseCreator():
         conn.close()
 
         for row in rows:
-            print(row)
-            if row[1] == login:
+            if row[0] == login:
                 flag = True
 
-        print(flag)
         return flag
+
+    def check_password_is_correct(self, login, password):
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("SELECT login, password FROM Users")
+        except sqlite3.Error as error:
+            print("Error selecting login and password from users table", error)
+
+        flag = False
+
+        rows = cursor.fetchall()
+        conn.close()
+
+        for row in rows:
+            if row[0] == login:
+                if row[1] == password:
+                    flag = True
+
+        return flag
+
 
     def add_User_in_Users_table(self, login, password):
         conn = sqlite3.connect(self.db_name)
