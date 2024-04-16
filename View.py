@@ -4,7 +4,7 @@ from EditNoteWindow import Ui_EditNoteWindow
 from LoginWindow import Ui_LoginWindow
 from ViewModel import ViewModel
 from PyQt6 import QtCore
-from PyQt6.QtCore import Qt, QModelIndex
+from PyQt6.QtCore import Qt, QModelIndex, QDate
 from PyQt6.QtWidgets import QMainWindow, QDialog
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from typing import List
@@ -64,6 +64,7 @@ class View():
         self.connect_all_events_of_buttons_in_MainWindow()
         self.connect_all_events_of_buttons_in_LoginWindow()
         self.connect_all_events_of_buttons_in_AddWindow()
+        self.connect_all_events_of_buttons_in_EditWindow()
 
         self.login_Window.loginLabelEdit.textChanged.connect(self.connect_login_to_loginEdit)
         self.login_Window.passwordLabelEdit.textChanged.connect(self.connect_password_to_passwordEdit)
@@ -71,6 +72,8 @@ class View():
         self.add_note_window.noteTextEdit.textChanged.connect(self.connect_note_to_noteTextEdit_in_Add_note_Window)
 
         self.main_Window.showEvent = self.main_Window_showEvent
+        self.add_note_window.showEvent = self.add_note_Window_showEvent
+        self.edit_note_window.showEvent = self.edit_note_Window_showEvent
         self.main_Window.searchBar.textChanged.connect(self.connect_search_filter_to_SearchBar_in_MainWindow)
         self.main_Window.table_of_notes.clicked.connect(self.change_selected_Note_of_User)
 
@@ -80,6 +83,18 @@ class View():
 
     def main_Window_showEvent(self, event):
         self.change_notes_in_table_of_notes_in_MainWindow()
+
+    def add_note_Window_showEvent(self, event):
+        self.change_date_in_Add_note_Window()
+
+    def edit_note_Window_showEvent(self, event):
+        self.change_date_in_calendar_in_edit_note_window()
+        note_text = self.viewModel.get_selected_note().note
+        self.edit_note_window.noteTextEdit.setPlainText(note_text)
+
+    def change_date_in_calendar_in_edit_note_window(self):
+        date = QDate.fromString(self.viewModel.get_selected_note().date, "yyyy-MM-dd")
+        self.edit_note_window.noteSelectedDate.setSelectedDate(date)
 
     def connect_login_to_loginEdit(self):
         self.login = self.login_Window.loginLabelEdit.text()
@@ -95,8 +110,10 @@ class View():
         self.change_notes_in_table_of_notes_in_MainWindow()
 
     def connect_date_to_noteSelectedDate_in_Add_note_Window(self):
-        self.note_date = self.add_note_window.noteSelectedDate.selectedDate()
-        self.note_date = self.note_date.toString("yyyy-MM-dd")
+        self.change_date_in_Add_note_Window()
+
+    def change_date_in_Add_note_Window(self):
+        self.note_date = self.add_note_window.noteSelectedDate.selectedDate().toString("yyyy-MM-dd")
 
     def get_all_notes_of_User(self):
         return self.viewModel.get_all_notes_of_User(self.viewModel.get_login_of_User(), self.search_filter)
@@ -123,14 +140,23 @@ class View():
     def change_selected_Note_of_User(self, index: QModelIndex):
         if index.isValid():
             selected_row = index.row()
-            item_id = self.table_of_notes_item_model.item(selected_row, 0).text()
-            item_note = self.table_of_notes_item_model.item(selected_row, 1).text()
-            item_date = self.table_of_notes_item_model.item(selected_row, 2).text()
-            print(f"Selected item: ID={item_id}, Note={item_note}, Date={item_date}")
+            note_id = self.table_of_notes_item_model.item(selected_row, 0).text()
+            note_text = self.table_of_notes_item_model.item(selected_row, 1).text()
+            note_date = self.table_of_notes_item_model.item(selected_row, 2).text()
+            self.viewModel.change_selected_note(int(note_id), note_text, note_date)
+            print(self.viewModel.get_selected_note().note)
+            print(f"Selected item: ID={note_id}, Note={note_text}, Date={note_date}")
+
+    def delete_note_in_MainWindow_is_pressed(self):
+        note_id = self.viewModel.get_selected_note().note_id
+        self.viewModel.delete_note(note_id)
+        self.viewModel.reset_selected_note()
+        self.change_notes_in_table_of_notes_in_MainWindow()
 
     def connect_all_events_of_buttons_in_MainWindow(self):
         self.main_Window.add_button.pressed.connect(lambda: self.add_button_in_MainWindow_is_pressed())
         self.main_Window.edit_button.pressed.connect(lambda: self.edit_button_in_MainWindow_is_pressed())
+        self.main_Window.delete_button.pressed.connect(lambda: self.delete_note_in_MainWindow_is_pressed())
 
     def add_button_in_MainWindow_is_pressed(self):
         self.add_note_window.show()
@@ -144,6 +170,7 @@ class View():
 
     def add_button_in_AddNoteWindow_is_pressed(self):
         self.viewModel.add_note_in_UsersNotes_table(self.viewModel.get_login_of_User(), self.note, self.note_date)
+        self.change_notes_in_table_of_notes_in_MainWindow()
 
     #LoginWindow
     def connect_all_events_of_buttons_in_LoginWindow(self):
@@ -157,6 +184,7 @@ class View():
                     if self.viewModel.check_password_is_correct(self.login, self.password):
                         self.viewModel.change_users_info(self.login, self.password)
                         self.main_Window.mainTabLabel.setText(f"Welcome {self.login}. Here all your notes")
+                        self.viewModel.reset_selected_note()
                         self.main_Window.show()
                     else:
                         self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
@@ -229,3 +257,15 @@ class View():
                 return False
         else:
             return False
+
+    #EditWindow
+    def connect_all_events_of_buttons_in_EditWindow(self):
+        self.edit_note_window.edit_button.pressed.connect(lambda: self.edit_button_in_edit_note_window_Is_Pressed())
+
+    def edit_button_in_edit_note_window_Is_Pressed(self):
+        self.note_id = self.viewModel.get_selected_note().note_id
+        self.note_text = self.edit_note_window.noteTextEdit.toPlainText()
+        self.note_date = self.edit_note_window.noteSelectedDate.selectedDate().toString("yyyy-MM-dd")
+
+        self.viewModel.edit_note(self.note_id, self.note_text, self.note_date)
+        self.change_notes_in_table_of_notes_in_MainWindow()

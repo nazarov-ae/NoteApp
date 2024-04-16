@@ -1,9 +1,9 @@
 import pretty_errors
-from Database import DatabaseCreator
+from Database import Database
 from User import User
 
 
 class Model():
     def __init__(self) -> None:
-        self.database_creator = DatabaseCreator()
+        self.database_creator = Database()
         self.user = User()

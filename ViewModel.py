@@ -9,11 +9,24 @@ class ViewModel():
         self.model.user.login = login
         self.model.user.password = password
 
-    def change_selected_note(self):
-        pass
+    def delete_note(self, note_id):
+        self.model.database_creator.delete_note(note_id)
 
-    def change_notes_in_table_of_notes(self, searchLabel):
-        pass
+    def edit_note(self, note_id, note, date):
+        self.model.database_creator.edit_note(note_id, note, date)
+
+    def reset_selected_note(self):
+        self.model.user.selectedNote.note_id = 0
+        self.model.user.selectedNote.note = ""
+        self.model.user.selectedNote.date = ""
+
+    def change_selected_note(self, note_id, note, date):
+        self.model.user.selectedNote.note_id = note_id
+        self.model.user.selectedNote.note = note
+        self.model.user.selectedNote.date = date
+
+    def get_selected_note(self):
+        return self.model.user.selectedNote
 
     def get_login_of_User(self):
         return self.model.user.login

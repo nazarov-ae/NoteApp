@@ -1,6 +1,6 @@
 import sqlite3
 
-class DatabaseCreator():
+class Database():
     def __init__(self):
         self.db_name = "noteAppDataBase"
         self.create_database()
@@ -20,10 +20,10 @@ class DatabaseCreator():
                             login TEXT NOT NULL,
                             password TEXT NOT NULL
                            )""")
+            conn.commit()
         except sqlite3.Error as error:
             print("Error creating Users table", error)
 
-        conn.commit()
         conn.close()
 
     def create_UsersNotes_table(self):
@@ -36,10 +36,11 @@ class DatabaseCreator():
                             text TEXT NOT NULL,
                             date TEXT NOT NULL
                            )""")
+            conn.commit()
         except sqlite3.Error as error:
             print("Error creating UsersNotes table", error)
 
-        conn.commit()
+
         conn.close()
 
     def check_login_is_registered(self, login):
@@ -48,6 +49,7 @@ class DatabaseCreator():
 
         try:
             cursor.execute("SELECT login FROM Users")
+            conn.commit()
         except sqlite3.Error as error:
             print("Error selecting login from users table", error)
 
@@ -68,6 +70,7 @@ class DatabaseCreator():
 
         try:
             cursor.execute("SELECT login, password FROM Users")
+            conn.commit()
         except sqlite3.Error as error:
             print("Error selecting login and password from users table", error)
 
@@ -90,6 +93,7 @@ class DatabaseCreator():
 
         try:
             cursor.execute("SELECT id, login FROM Users")
+            conn.commit()
         except sqlite3.Error as error:
             print("Error selecting login and id from users table", error)
 
@@ -115,10 +119,10 @@ class DatabaseCreator():
 
         try:
             cursor.execute(sql_query, note_data)
+            conn.commit()
         except sqlite3.Error as error:
             print("Error added note in UsersNote", error)
 
-        conn.commit()
         conn.close()
 
     def get_all_notes_of_User(self, login, search_filter):
@@ -132,12 +136,12 @@ class DatabaseCreator():
 
         try:
             cursor.execute(sql_query, note_data)
+            conn.commit()
         except sqlite3.Error as error:
             print("Error getting all notes of User", error)
 
         rows = cursor.fetchall()
 
-        conn.commit()
         conn.close()
         return rows
 
@@ -150,8 +154,41 @@ class DatabaseCreator():
 
         try:
             cursor.execute(sql_query, user_data)
+            conn.commit()
         except sqlite3.Error as error:
             print("Error added user in Users table", error)
 
-        conn.commit()
+        conn.close()
+
+    def delete_note(self, note_id):
+        print(note_id, type(note_id))
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        sql_query = "DELETE FROM UsersNotes WHERE id = ?"
+        user_data = (str(note_id),)
+
+        try:
+            cursor.execute(sql_query, user_data)
+            conn.commit()
+        except sqlite3.Error as error:
+            print("Error deleting note from UsersNotes", error)
+
+
+        conn.close()
+
+    def edit_note(self, note_id, note, date):
+        print(note_id, type(note_id))
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        sql_query = "UPDATE UsersNotes SET text = ?, date = ? WHERE id = ?"
+        user_data = (note, date, str(note_id))
+
+        try:
+            cursor.execute(sql_query, user_data)
+            conn.commit()
+        except sqlite3.Error as error:
+            print("Error editing note from UsersNotes", error)
+
         conn.close()
