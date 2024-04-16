@@ -83,6 +83,63 @@ class DatabaseCreator():
 
         return flag
 
+    def get_user_id(self, login):
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+        id_of_user = 0
+
+        try:
+            cursor.execute("SELECT id, login FROM Users")
+        except sqlite3.Error as error:
+            print("Error selecting login and id from users table", error)
+
+
+        rows = cursor.fetchall()
+        conn.close()
+
+        for row in rows:
+            if row[1] == login:
+                id_of_user = row[0]
+
+        return id_of_user
+
+    def add_note_in_UsersNotes_table(self, login, note, date):
+        user_id = self.get_user_id(login)
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        sql_query = """INSERT INTO UsersNotes (user_id, text, date) VALUES (?, ?, ?)"""
+        note_data = (user_id, note, date)
+
+        print(date)
+
+        try:
+            cursor.execute(sql_query, note_data)
+        except sqlite3.Error as error:
+            print("Error added note in UsersNote", error)
+
+        conn.commit()
+        conn.close()
+
+    def get_all_notes_of_User(self, login, search_filter):
+        user_id = self.get_user_id(login)
+        conn = sqlite3.connect(self.db_name)
+        cursor = conn.cursor()
+
+        sql_query = """SELECT id, text, date FROM UsersNotes
+        WHERE user_id=? AND text LIKE ?"""
+        note_data = (user_id, f"%{search_filter}%" if search_filter else "%")
+
+        try:
+            cursor.execute(sql_query, note_data)
+        except sqlite3.Error as error:
+            print("Error getting all notes of User", error)
+
+        rows = cursor.fetchall()
+
+        conn.commit()
+        conn.close()
+        return rows
 
     def add_User_in_Users_table(self, login, password):
         conn = sqlite3.connect(self.db_name)
@@ -91,7 +148,10 @@ class DatabaseCreator():
         sql_query = """INSERT INTO Users (login, password) VALUES (?, ?)"""
         user_data = (login, password)
 
-        cursor.execute(sql_query, user_data)
+        try:
+            cursor.execute(sql_query, user_data)
+        except sqlite3.Error as error:
+            print("Error added user in Users table", error)
 
         conn.commit()
         conn.close()

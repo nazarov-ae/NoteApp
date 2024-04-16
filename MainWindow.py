@@ -165,8 +165,8 @@ class Ui_MainWindow(object):
         self.frame_3.setObjectName("frame_3")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frame_3)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.tableView = QtWidgets.QTableView(parent=self.frame_3)
-        self.tableView.setStyleSheet("QTableView {\n"
+        self.table_of_notes = QtWidgets.QTableView(parent=self.frame_3)
+        self.table_of_notes.setStyleSheet("QTableView {\n"
 "    background-color: rgb(228, 227, 233);\n"
 "    border-radius: 7px;\n"
 "}\n"
@@ -188,12 +188,12 @@ class Ui_MainWindow(object):
 "    border: none;\n"
 "    color: rgba(255, 255, 255, 40)\n"
 "}")
-        self.tableView.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.tableView.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
-        self.tableView.setShowGrid(False)
-        self.tableView.setObjectName("tableView")
-        self.tableView.horizontalHeader().setDefaultSectionSize(135)
-        self.verticalLayout_4.addWidget(self.tableView)
+        self.table_of_notes.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.table_of_notes.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.table_of_notes.setShowGrid(False)
+        self.table_of_notes.setObjectName("table_of_notes")
+        self.table_of_notes.horizontalHeader().setDefaultSectionSize(135)
+        self.verticalLayout_4.addWidget(self.table_of_notes)
         self.verticalLayout_3.addWidget(self.frame_3)
         MainWindow.setCentralWidget(self.centralwidget)
 
