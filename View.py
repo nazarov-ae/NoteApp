@@ -47,7 +47,8 @@ class View():
 
         self.connect_all_events_of_buttons_in_MainWindow()
         self.connect_all_events_of_buttons_in_LoginWindow()
-        self.connect_all_events_of_buttons_in_NoteWindow()
+        self.connect_all_events_of_buttons_in_AddWindow()
+
         self.login_Window.show()
 
     #MainWindow
@@ -63,20 +64,38 @@ class View():
 
     #LoginWindow
     def connect_all_events_of_buttons_in_LoginWindow(self):
+        self.login_Window.sign_up_button.pressed.connect(lambda: self.sign_up_button_in_LoginWindow_is_pressed())
         self.login_Window.sign_in_button.pressed.connect(lambda: self.sign_in_button_in_LoginWindow_is_pressed())
 
     def sign_in_button_in_LoginWindow_is_pressed(self):
         if self.check_loginLabelEdit_validation_is_passed():
             if self.check_passwordLabelEdit_validation_is_passed():
-                self.main_Window.mainTabLabel.setText(f"Welcome {self.login_Window.loginLabelEdit.text()}. Here all your notes")
-                self.main_Window.show()
+                pass
+
+    def check_if_login_is_registered(self):
+        if self.viewModel.check_login_is_registered():
+            pass
+        else:
+            return False
+
+    def sign_up_button_in_LoginWindow_is_pressed(self):
+        if self.check_loginLabelEdit_validation_is_passed():
+            if self.check_passwordLabelEdit_validation_is_passed():
+                if self.viewModel.check_login_is_registered(self.login_Window.loginLabelEdit.text()):
+                    self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+                    self.login_Window.loginWarningLabel.setText("This login is already used")
+                else:
+                    self.viewModel.add_user_in_Users_table(self.login_Window.loginLabelEdit.text(), self.login_Window.passwordLabelEdit.text())
+                    self.login_Window.loginWarningLabel.setStyleSheet('color: green')
+                    self.login_Window.loginWarningLabel.setText("Account is registered")
 
     def check_login_is_not_empty(self):
         if self.login_Window.loginLabelEdit.text() != "":
             self.login_Window.loginWarningLabel.setText("")
             return True
         else:
-            self.login_Window.loginWarningLabel.setText("Пожалуйста введите логин")
+            self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+            self.login_Window.loginWarningLabel.setText("Please enter your login")
             return False
 
     def check_password_is_not_empty(self):
@@ -84,7 +103,8 @@ class View():
             self.login_Window.passwordWarningLabel.setText("")
             return True
         else:
-            self.login_Window.passwordWarningLabel.setText("Пожалуйста введите пароль")
+            self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+            self.login_Window.passwordWarningLabel.setText("Please enter your password")
             return False
 
     def check_login_rules_are_followed(self):
@@ -92,15 +112,17 @@ class View():
             self.login_Window.loginWarningLabel.setText("")
             return True
         else:
-            self.login_Window.loginWarningLabel.setText("Логин должен быть меньше либо равен 10 символам")
+            self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+            self.login_Window.loginWarningLabel.setText("Login must be less than 10 characters")
             return False
 
     def check_password_rules_are_followed(self):
-        if len(self.login_Window.passwordLabelEdit.text()) < 8:
+        if len(self.login_Window.passwordLabelEdit.text()) > 8:
             self.login_Window.loginWarningLabel.setText("")
             return True
         else:
-            self.login_Window.loginWarningLabel.setText("Пароль должен быть длиней 8 символов")
+            self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+            self.login_Window.passwordWarningLabel.setText("Password must be more than 8 characters")
             return False
 
     def check_loginLabelEdit_validation_is_passed(self):
@@ -122,7 +144,7 @@ class View():
             return False
 
     #NoteWindow
-    def connect_all_events_of_buttons_in_NoteWindow(self):
+    def connect_all_events_of_buttons_in_AddWindow(self):
         self.add_note_window.add_button.pressed.connect(lambda: self.add_button_in_AddNoteWindow_is_pressed())
 
     def add_button_in_AddNoteWindow_is_pressed():
