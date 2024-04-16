@@ -195,9 +195,11 @@ class View():
                 self.main_Window.show()
             else:
                 self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+                self.reset_warning_labels_in_login_window()
                 self.login_Window.passwordWarningLabel.setText("Incorrect password")
         else:
             self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+            self.reset_warning_labels_in_login_window()
             self.login_Window.loginWarningLabel.setText("This login does not registered")
 
     def sign_up_button_in_LoginWindow_is_pressed(self):
@@ -205,10 +207,12 @@ class View():
             if self.check_passwordLabelEdit_validation_is_passed():
                 if self.viewModel.check_login_is_registered(self.login):
                     self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+                    self.reset_warning_labels_in_login_window()
                     self.login_Window.loginWarningLabel.setText("This login is already registered")
                 else:
                     self.viewModel.add_user_in_Users_table(self.login, self.password)
                     self.login_Window.loginWarningLabel.setStyleSheet('color: green')
+                    self.reset_warning_labels_in_login_window()
                     self.login_Window.loginWarningLabel.setText("Account is registered")
 
     def check_login_is_not_empty(self):
@@ -217,6 +221,7 @@ class View():
             return True
         else:
             self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+            self.reset_warning_labels_in_login_window()
             self.login_Window.loginWarningLabel.setText("Please enter your login")
             return False
 
@@ -226,6 +231,7 @@ class View():
             return True
         else:
             self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+            self.reset_warning_labels_in_login_window()
             self.login_Window.passwordWarningLabel.setText("Please enter your password")
             return False
 
@@ -235,6 +241,7 @@ class View():
             return True
         else:
             self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+            self.reset_warning_labels_in_login_window()
             self.login_Window.loginWarningLabel.setText("Login must be less than 10 characters")
             return False
 
@@ -244,6 +251,7 @@ class View():
             return True
         else:
             self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
+            self.reset_warning_labels_in_login_window()
             self.login_Window.passwordWarningLabel.setText("Password must be more than 8 characters")
             return False
 
