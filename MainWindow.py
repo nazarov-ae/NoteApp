@@ -86,7 +86,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
-"background-color: rgb(224, 224, 224, 40);\n"
+"background-color: rgba(224, 224, 224, 40);\n"
 "}\n"
 "")
         icon = QtGui.QIcon()
@@ -123,7 +123,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
-"background-color: rgb(224, 224, 224, 40);\n"
+"background-color: rgba(224, 224, 224, 40);\n"
 "}\n"
 "")
         icon1 = QtGui.QIcon()
@@ -150,7 +150,7 @@ class Ui_MainWindow(object):
 "}\n"
 "\n"
 "QPushButton:pressed {\n"
-"background-color: rgb(224, 224, 224, 40);\n"
+"background-color: rgba(224, 224, 224, 40);\n"
 "}\n"
 "")
         icon2 = QtGui.QIcon()
