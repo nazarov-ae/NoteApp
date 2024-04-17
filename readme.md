@@ -6,7 +6,7 @@
 - Create your own account
 - Adding notes
 - Editing notes
-- Deliting notes
+- Deleting notes
 - Searching notes
 
 ## Tech
