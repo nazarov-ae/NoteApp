@@ -1,4 +1,3 @@
-import pretty_errors
 from Model import Model
 
 class ViewModel():
