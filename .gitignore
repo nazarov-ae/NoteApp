@@ -4,4 +4,5 @@ icons
 __pycache__
 noteAppDataBase
 Main.spec
-
+build/
+dist/

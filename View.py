@@ -9,7 +9,6 @@ from PyQt6.QtWidgets import QMainWindow, QDialog
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 from typing import List
 from Note import Note
-import pretty_errors
 
 class MainWindowUI(Ui_MainWindow, QMainWindow):
     def __init__(self):

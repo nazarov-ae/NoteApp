@@ -1,4 +1,3 @@
-import pretty_errors
 from Database import Database
 from User import User
 
