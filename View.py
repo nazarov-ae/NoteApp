@@ -77,6 +77,7 @@ class View():
         self.main_Window.searchBar.textChanged.connect(self.connect_search_filter_to_SearchBar_in_MainWindow)
         self.main_Window.table_of_notes.clicked.connect(self.change_selected_Note_of_User)
 
+        self.edit_note_window.noteSelectedDate.selectionChanged.connect(self.connect_date_to_noteSelectedDate_in_Edit_note_Window)
         self.add_note_window.noteSelectedDate.selectionChanged.connect(self.connect_date_to_noteSelectedDate_in_Add_note_Window)
 
         self.login_Window.show()
@@ -86,6 +87,7 @@ class View():
 
     def add_note_Window_showEvent(self, event):
         self.change_date_in_Add_note_Window()
+        self.add_note_window.noteTextEdit.setPlainText("")
 
     def edit_note_Window_showEvent(self, event):
         self.change_date_in_calendar_in_edit_note_window()
@@ -111,6 +113,12 @@ class View():
 
     def connect_date_to_noteSelectedDate_in_Add_note_Window(self):
         self.change_date_in_Add_note_Window()
+
+    def connect_date_to_noteSelectedDate_in_Edit_note_Window(self):
+        self.change_date_in_Edit_note_Window()
+
+    def change_date_in_Edit_note_Window(self):
+        self.note_date = self.edit_note_window.noteSelectedDate.selectedDate().toString("yyyy-MM-dd")
 
     def change_date_in_Add_note_Window(self):
         self.note_date = self.add_note_window.noteSelectedDate.selectedDate().toString("yyyy-MM-dd")
@@ -159,6 +167,7 @@ class View():
         self.main_Window.delete_button.pressed.connect(lambda: self.delete_note_in_MainWindow_is_pressed())
 
     def add_button_in_MainWindow_is_pressed(self):
+        self.add_note_window.noteTextEdit.setPlainText("")
         self.add_note_window.show()
 
     def edit_button_in_MainWindow_is_pressed(self):
@@ -174,8 +183,8 @@ class View():
 
     #LoginWindow
     def connect_all_events_of_buttons_in_LoginWindow(self):
-        self.login_Window.sign_up_button.pressed.connect(lambda: self.sign_up_button_in_LoginWindow_is_pressed())
-        self.login_Window.sign_in_button.pressed.connect(lambda: self.sign_in_button_in_LoginWindow_is_pressed())
+        self.login_Window.sign_up_button.clicked.connect(lambda: self.sign_up_button_in_LoginWindow_is_pressed())
+        self.login_Window.sign_in_button.clicked.connect(lambda: self.sign_in_button_in_LoginWindow_is_pressed())
 
     def reset_login_and_password_labels(self):
         self.login_Window.loginLabelEdit.setText("")
@@ -193,6 +202,7 @@ class View():
                 self.viewModel.reset_selected_note()
                 self.reset_login_and_password_labels()
                 self.main_Window.show()
+                self.reset_warning_labels_in_login_window()
             else:
                 self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
                 self.reset_warning_labels_in_login_window()
