@@ -203,6 +203,7 @@ class View():
                 self.reset_login_and_password_labels()
                 self.main_Window.show()
                 self.reset_warning_labels_in_login_window()
+                self.login_Window.close()
             else:
                 self.login_Window.passwordWarningLabel.setStyleSheet('color: red')
                 self.reset_warning_labels_in_login_window()
