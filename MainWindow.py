@@ -9,6 +9,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
+# В QT наверняка есть возможность описывать UI чисто декларативно, с помощью
+# json/xml/чего-то подобного. Делать это кодом - не лучшее решение.
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
