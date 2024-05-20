@@ -60,6 +60,18 @@ class View():
         self.login_Window.loginWarningLabel.setText("")
         self.login_Window.passwordWarningLabel.setText("")
 
+        # Будет лучше распилить этот класс на MainWindowView, LoginWindowView,
+        # AddWindowView, EditWindowView. Чтобы каждый отвечал за логику
+        # конкретного окна. Общую функциональность, если она будет можно
+        # вынести в базовый класс-родитель.
+        # То есть у каждого класса будут методы setup_ui, bind_events (так бы я
+        # переименовал connect_all_events_of_buttons) и конкретные методы и
+        # атрибуты, специфичные для конкретного окна.
+        # За одно бы ушли постфиксы в названии методов, таких как эти
+        # setup_model_in_table_of_notes_in_MainWindow
+        # change_notes_in_table_of_notes_in_MainWindow
+        # Это про принцип SRP из SOLID (обязательно почитай)
+
         self.connect_all_events_of_buttons_in_MainWindow()
         self.connect_all_events_of_buttons_in_LoginWindow()
         self.connect_all_events_of_buttons_in_AddWindow()
@@ -117,6 +129,9 @@ class View():
         self.change_date_in_Edit_note_Window()
 
     def change_date_in_Edit_note_Window(self):
+        # Исключить дублирование кода с change_date_in_Add_note_Window
+        # Вообще если есть повторяющийся код - это плохо. Надо придумать как грамотно его переиспользовать.
+        # Например сделать общий метод/функцию, которая будет вызываться в нужных местах.
         self.note_date = self.edit_note_window.noteSelectedDate.selectedDate().toString("yyyy-MM-dd")
 
     def change_date_in_Add_note_Window(self):
@@ -151,6 +166,8 @@ class View():
             note_text = self.table_of_notes_item_model.item(selected_row, 1).text()
             note_date = self.table_of_notes_item_model.item(selected_row, 2).text()
             self.viewModel.change_selected_note(int(note_id), note_text, note_date)
+            # Вместо принтов лучше переключиться на логгирования, стандартный
+            # модуль logging для этого отлично подойдет.
             print(self.viewModel.get_selected_note().note)
             print(f"Selected item: ID={note_id}, Note={note_text}, Date={note_date}")
 
@@ -226,14 +243,22 @@ class View():
                     self.login_Window.loginWarningLabel.setText("Account is registered")
 
     def check_login_is_not_empty(self):
-        if self.login_Window.loginLabelEdit.text() != "":
+        # Где получаем булевый тип, лучше использовать его напрямую в условиях,
+        # без дополнительных сравнений.
+        # Если есть возможность избежать else - лучше так и сделать. Можно в
+        # большинстве случаев.
+        # Эти рекомендации надо применить ко всем подобным местам, например к
+        # методу check_password_is_not_empty
+        # Вообще все подобные проверки лучше собрать в валидаторы для полей, а
+        # еще лучше использовать для этого встроенную функциональность QT. Я с
+        # QT не работал, но это там наверняка есть.
+        if self.login_Window.loginLabelEdit.text():
             self.login_Window.loginWarningLabel.setText("")
             return True
-        else:
-            self.login_Window.loginWarningLabel.setStyleSheet('color: red')
-            self.reset_warning_labels_in_login_window()
-            self.login_Window.loginWarningLabel.setText("Please enter your login")
-            return False
+        self.login_Window.loginWarningLabel.setStyleSheet('color: red')
+        self.reset_warning_labels_in_login_window()
+        self.login_Window.loginWarningLabel.setText("Please enter your login")
+        return False
 
     def check_password_is_not_empty(self):
         if self.login_Window.passwordLabelEdit.text() != "":
@@ -246,6 +271,9 @@ class View():
             return False
 
     def check_login_rules_are_followed(self):
+        # Просто цифры в коде использовать прям не желательно, лучше определить,
+        # например LOGIN_MIN_LENGTH в методе/классе/конфиге и уже его использовать.
+        # Это относится и ко всем другим таким
         if len(self.login_Window.loginLabelEdit.text()) < 10:
             self.login_Window.loginWarningLabel.setText("")
             return True
@@ -266,13 +294,9 @@ class View():
             return False
 
     def check_loginLabelEdit_validation_is_passed(self):
-        if self.check_login_is_not_empty():
-            if self.check_login_rules_are_followed():
-                return True
-            else:
-                return False
-        else:
-            return False
+        return (
+            self.check_login_is_not_empty() and
+            self.check_login_rules_are_followed())
 
     def check_passwordLabelEdit_validation_is_passed(self):
         if self.check_password_is_not_empty():

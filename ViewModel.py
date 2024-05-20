@@ -4,6 +4,11 @@ class ViewModel():
     def __init__(self, model: Model) -> None:
         self.model = model
 
+    # Похоже что это метод модели, а не модель-вью.
+    # Не понятно, почему здесь меняются поля для User, но в БД ничего не
+    # пишется. Тот же вопрос по reset_selected_note и change_selected_note,
+    # остальные методы дергают слой модели - вроде гуд, все по MVVM
+    # Похоже метод должен называться update_user.
     def change_users_info(self, login, password):
         self.model.user.login = login
         self.model.user.password = password
@@ -46,6 +51,9 @@ class ViewModel():
             return False
 
     def check_password_is_correct(self, login, password):
+        # Для булевых значений лучше сразу так:
+        # return self.model.database_creator.check_password_is_correct(login, password)
+        # То же самое для всех остальных подобных ситуаций, например check_login_is_registered
         if self.model.database_creator.check_password_is_correct(login, password):
             return True
         else:

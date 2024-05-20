@@ -8,6 +8,10 @@ class Database():
         self.create_UsersNotes_table()
 
     def create_database(self):
+        # conn = sqlite3.connect(self.db_name) повторяется во всех методах.
+        # Как вариант можно сделать self.conn = sqlite3.connect(self.db_name)
+        # в __init__ и обращаться далее к нему. Или лучше сразу курсор, так
+        # как общаешься с базой именно через него.
         conn = sqlite3.connect(self.db_name)
         conn.close()
 
@@ -15,6 +19,11 @@ class Database():
         conn = sqlite3.connect(self.db_name)
         cursor = conn.cursor()
         try:
+            # Если в QT есть возможность вместо SQL делать запросы через
+            # python-объекты, то это надо использовать.
+            # Почитай про ORM.
+            # Похоже, что тебе надо создать таблицу, только если ее нет, а
+            # не каждый раз.
             cursor.execute("""CREATE TABLE IF NOT EXISTS Users (
                             id INTEGER PRIMARY KEY,
                             login TEXT NOT NULL,
@@ -22,8 +31,12 @@ class Database():
                            )""")
             conn.commit()
         except sqlite3.Error as error:
+            # Это сообщение должно быть записано в логи и должно быть выведено
+            # пользователю, желательно в понятном ему виде.
             print("Error creating Users table", error)
 
+        # Каждый раз открывать/закрывать соединение с базой не надо.
+        # Открыли при создании класса и работаем с ним.
         conn.close()
 
     def create_UsersNotes_table(self):
@@ -39,7 +52,6 @@ class Database():
             conn.commit()
         except sqlite3.Error as error:
             print("Error creating UsersNotes table", error)
-
 
         conn.close()
 
@@ -76,9 +88,11 @@ class Database():
 
         flag = False
 
+        # Здесь приложение упадет, если до этого будет ошибка qlite3.Error
         rows = cursor.fetchall()
         conn.close()
 
+        # Это можно сделать напрямую с помощью SQL.
         for row in rows:
             if row[0] == login:
                 if row[1] == password:
@@ -97,15 +111,26 @@ class Database():
         except sqlite3.Error as error:
             print("Error selecting login and id from users table", error)
 
-
+        # Здесь приложение упадет, если до этого будет ошибка qlite3.Error
         rows = cursor.fetchall()
         conn.close()
 
+        # Это можно сделать напрямую с помощью SQL.
         for row in rows:
             if row[1] == login:
                 id_of_user = row[0]
 
         return id_of_user
+
+        # # В итоге все методы можно свести к подобному виду:
+        # query = ''
+        # try:
+        #     self.cursor.execute(query)
+        #     return conn.commit()
+        # except sqlite3.Error as error:
+        #     # Пишем логи и прокидываем исключение дальше. Ловим и обрабатываем
+        #     # в ViewModel.
+        #     raise
 
     def add_note_in_UsersNotes_table(self, login, note, date):
         user_id = self.get_user_id(login)
